@@ -1,11 +1,18 @@
-import { useEffect } from "react";
+import React from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import { Container, Box, Typography } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  FormControl,
+  TextField,
+  Button,
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { actionGetUserRepos } from "../src/redux/actions/repos";
 import { RootStateType, ReposStateType } from "../src/types";
-import { useDispatch, useSelector } from "react-redux";
+import useSearchForm from "../src/hooks/useSearchForm";
 import RepoItem from "../src/modules/RepoItem";
 import NextLink from "../src/modules/NextLink";
 
@@ -16,10 +23,22 @@ const Home: NextPage = () => {
     ReposStateType
   >((state) => state.repos);
 
+  const { strUserName, handleSubmit, handleChange, handleReset } =
+    useSearchForm((strSearchTerm: string) =>
+      dispatch(actionGetUserRepos(strSearchTerm, true))
+    );
+
   const renderReposList = () => {
     if (bLoading) return <Typography>Loading repos...</Typography>;
     if (nStrError) return <Typography>Error occured: {nStrError}</Typography>;
-
+    if (arrRepos.length === 0) {
+      return (
+        <Typography>
+          Current user does not have any repository. Enter username to search
+          for repos.
+        </Typography>
+      );
+    }
     return arrRepos.map((repo) => (
       <NextLink
         key={repo.id}
@@ -31,11 +50,6 @@ const Home: NextPage = () => {
       </NextLink>
     ));
   };
-
-  useEffect(() => {
-    dispatch(actionGetUserRepos("Sergei29", true));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <Container sx={{ backgroundColor: (theme) => theme.bg.main }}>
@@ -51,7 +65,7 @@ const Home: NextPage = () => {
           textAlign="center"
           sx={{ color: (theme) => theme.text.main }}
         >
-          Homepage
+          Github Repositories
         </Typography>
         <Box
           sx={{
@@ -62,7 +76,29 @@ const Home: NextPage = () => {
             alignItems: "center",
           }}
         >
-          <Typography>repo list</Typography>
+          <Box component="form" onSubmit={handleSubmit}>
+            <FormControl>
+              <TextField
+                value={strUserName}
+                label="username"
+                onChange={handleChange}
+              />
+            </FormControl>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 1,
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Button type="submit">Search</Button>
+              <Button onClick={handleReset} color="warning">
+                Reset
+              </Button>
+            </Box>
+          </Box>
           <Box
             sx={{
               display: "flex",
