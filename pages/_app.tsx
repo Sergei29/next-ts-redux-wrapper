@@ -1,6 +1,7 @@
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider, EmotionCache } from "@emotion/react";
+import { wrapper } from "../src/redux/store";
 import { createEmotionCache, theme } from "../src/Theme";
 import CssReset from "../src/modules/common/CssReset";
 
@@ -26,4 +27,4 @@ const MyApp = ({
   </CacheProvider>
 );
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);
