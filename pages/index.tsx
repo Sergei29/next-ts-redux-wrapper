@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { Container, Box, Typography } from "@mui/material";
 import { actionGetUserRepos } from "../src/redux/actions/repos";
 import { RootStateType, ReposStateType } from "../src/types";
 import { useDispatch, useSelector } from "react-redux";
+import RepoItem from "../src/modules/RepoItem";
+import NextLink from "../src/modules/NextLink";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -13,8 +16,24 @@ const Home: NextPage = () => {
     ReposStateType
   >((state) => state.repos);
 
+  const renderReposList = () => {
+    if (bLoading) return <Typography>Loading repos...</Typography>;
+    if (nStrError) return <Typography>Error occured: {nStrError}</Typography>;
+
+    return arrRepos.map((repo) => (
+      <NextLink
+        key={repo.id}
+        href="/repository/[id]"
+        as={`/repository/${repo.id}`}
+        passHref
+      >
+        <RepoItem objRepo={repo} />
+      </NextLink>
+    ));
+  };
+
   useEffect(() => {
-    // dispatch(actionGetUserRepos("Sergei29"));
+    dispatch(actionGetUserRepos("Sergei29", true));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -44,6 +63,17 @@ const Home: NextPage = () => {
           }}
         >
           <Typography>repo list</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 2,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {renderReposList()}
+          </Box>
         </Box>
       </Box>
 
