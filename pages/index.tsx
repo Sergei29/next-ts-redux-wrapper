@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   >((state) => state.repos);
 
   useEffect(() => {
-    dispatch(actionGetUserRepos("Sergei29"));
+    // dispatch(actionGetUserRepos("Sergei29"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
