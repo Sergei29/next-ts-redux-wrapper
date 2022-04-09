@@ -20,7 +20,8 @@ export const rootReducer: Reducer<RootStateType, AnyAction> = (
       ...objRootState,
       ...objAction.payload,
     };
-
+    if (objRootState?.repos.arrRepos)
+      objNextState.repos.arrRepos = objRootState?.repos.arrRepos;
     return objNextState;
   } else {
     return combinedReducer(objRootState, objAction);

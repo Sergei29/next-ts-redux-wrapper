@@ -14,6 +14,7 @@ export const reposPayloadAdaptor = (reposFullPayload: Record<string, any>[]) =>
     },
     created_at: repoItem.created_at || null,
     updated_at: repoItem.updated_at || null,
+    description: repoItem.description || null,
     size: repoItem.size || 0,
     stargazers_count: repoItem.stargazers_count || 0,
     watchers_count: repoItem.watchers_count || 0,

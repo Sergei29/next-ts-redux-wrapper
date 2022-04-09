@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Box, Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography, Chip } from "@mui/material";
 import { RepoType } from "../../types";
 
 type Props = {
@@ -9,7 +9,14 @@ type Props = {
 const RepoItem = ({ objRepo }: Props) => {
   return (
     <Card sx={{ width: "300px" }}>
-      <CardContent>
+      <CardContent
+        sx={{
+          ":hover": {
+            backgroundColor: (theme) => theme.bg.secondary,
+            transition: "all 300ms ease-in-out",
+          },
+        }}
+      >
         <Typography variant="h4" sx={{ fontSize: "18px", fontWeight: 600 }}>
           {objRepo.name}
         </Typography>
@@ -21,6 +28,9 @@ const RepoItem = ({ objRepo }: Props) => {
             Forks: {objRepo.forks_count}
           </Typography>
         </Box>
+        <Typography variant="caption">
+          Language: <Chip label={objRepo.language || "not mentioned"} />
+        </Typography>
       </CardContent>
     </Card>
   );

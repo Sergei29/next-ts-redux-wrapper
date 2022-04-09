@@ -17,7 +17,8 @@ const compoundMiddlewares = bIsDevelopment
   ? composeWithDevTools(applyMiddleware(...arrMiddlewares))
   : applyMiddleware(...arrMiddlewares);
 
-export const initStore = (): ReduxStore =>
-  createStore(rootReducer, compose(compoundMiddlewares));
+const store = createStore(rootReducer, compose(compoundMiddlewares));
+
+export const initStore = (): ReduxStore => store;
 
 export const wrapper = createWrapper(initStore);
