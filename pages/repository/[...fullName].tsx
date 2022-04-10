@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Box, Typography, IconButton } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import { actionGetRepoDetails } from "../../src/redux/actions/repos";
 import { RootStateType, ReposStateType } from "../../src/types";
 import { getLicenceData } from "../../src/utils";

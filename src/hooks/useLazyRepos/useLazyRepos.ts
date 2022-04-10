@@ -5,7 +5,7 @@ import { RootStateType, ReposStateType } from "../../types";
 
 const useLazyRepos = (): [(strSearchTerm: string) => void, ReposStateType] => {
   const dispatch = useDispatch();
-  const { arrRepos, bLoading, nStrError } = useSelector<
+  const { arrRepos, bLoading, nStrError, nObjSelectedRepo } = useSelector<
     RootStateType,
     ReposStateType
   >((state) => state.repos);
@@ -14,7 +14,10 @@ const useLazyRepos = (): [(strSearchTerm: string) => void, ReposStateType] => {
     dispatch(actionGetUserRepos(strSearchTerm));
   };
 
-  return [handleFetchRepos, { arrRepos, bLoading, nStrError }];
+  return [
+    handleFetchRepos,
+    { arrRepos, bLoading, nStrError, nObjSelectedRepo },
+  ];
 };
 
 export default useLazyRepos;

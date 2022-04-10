@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-type HookReturnValue<D> = [D, (value: D) => void];
+type HookReturnValue<D> = [D | null, (value: D) => void];
 
 const getValueFromLocalStorage = <P>(key: string, initialValue: P): P => {
   if (typeof window === "undefined") {
@@ -19,9 +19,7 @@ const useLocalStorage = <T>(
   key: string,
   initialValue: T
 ): HookReturnValue<T> => {
-  const [storedValue, setStoredValue] = useState(() =>
-    getValueFromLocalStorage(key, initialValue)
-  );
+  const [storedValue, setStoredValue] = useState<T | null>(null);
 
   const setValue = (value: T) => {
     try {
@@ -34,6 +32,13 @@ const useLocalStorage = <T>(
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    const value = getValueFromLocalStorage(key, initialValue);
+    setStoredValue(value);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return [storedValue, setValue];
 };

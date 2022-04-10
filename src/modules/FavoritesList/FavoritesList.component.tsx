@@ -2,6 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 import { RepoType } from "../../types";
 import RepoItem from "../RepoItem";
+import NoDataPlaceholder from "../common/NoDataPlaceholder";
 
 type Props = {
   arrFavorites: RepoType[];
@@ -17,13 +18,17 @@ const FavoritesList = ({ arrFavorites, handleRemoveFavorite }: Props) => (
       alignItems: "center",
     }}
   >
-    {arrFavorites.map((objFavRepo) => (
-      <RepoItem
-        key={objFavRepo.id}
-        objRepo={objFavRepo}
-        handleRemoveFavorite={handleRemoveFavorite}
-      />
-    ))}
+    {arrFavorites.length > 0 ? (
+      arrFavorites.map((objFavRepo) => (
+        <RepoItem
+          key={objFavRepo.id}
+          objRepo={objFavRepo}
+          handleRemoveFavorite={handleRemoveFavorite}
+        />
+      ))
+    ) : (
+      <NoDataPlaceholder />
+    )}
   </Box>
 );
 

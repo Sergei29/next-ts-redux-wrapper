@@ -8,22 +8,17 @@ import {
   FormControl,
   TextField,
   Button,
-  Divider,
 } from "@mui/material";
 import useLazyRepos from "../src/hooks/useLazyRepos";
 import useSearchForm from "../src/hooks/useSearchForm";
-import useFavorites from "../src/hooks/useFavorites";
 import RepoItem from "../src/modules/RepoItem";
 import NextLink from "../src/modules/NextLink";
-import FavoritesList from "../src/modules/FavoritesList";
 
 const Home: NextPage = () => {
   const [handleFetchRepos, { arrRepos, bLoading, nStrError }] = useLazyRepos();
 
   const { strUserName, handleSubmit, handleChange, handleReset } =
     useSearchForm(handleFetchRepos);
-
-  const { arrFavorites, handleRemoveFavorite } = useFavorites();
 
   const renderReposList = () => {
     if (bLoading) return <Typography>Loading repos...</Typography>;
@@ -111,21 +106,6 @@ const Home: NextPage = () => {
             {renderReposList()}
           </Box>
         </Box>
-        <Divider sx={{ my: 5 }} />
-        <Typography
-          variant="h2"
-          sx={{
-            color: (theme) => theme.text.main,
-            fontSize: "28px",
-            marginBottom: 2,
-          }}
-        >
-          Favorite repositories
-        </Typography>
-        <FavoritesList
-          arrFavorites={arrFavorites}
-          handleRemoveFavorite={handleRemoveFavorite}
-        />
       </Box>
 
       <Box component="footer"></Box>

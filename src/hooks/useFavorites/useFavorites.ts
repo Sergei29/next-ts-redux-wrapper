@@ -8,20 +8,23 @@ const useFavorites = () => {
   );
 
   const isFavorite = (strRepoFullName: string) =>
+    !!arrFavorites &&
     arrFavorites.findIndex((objRepo) => objRepo.full_name === strRepoFullName) >
-    -1;
+      -1;
 
   const handleRetrieveFavorite = (strRepoFullName: string) =>
-    arrFavorites.find((objRepo) => objRepo.full_name === strRepoFullName) ||
+    (!!arrFavorites &&
+      arrFavorites.find((objRepo) => objRepo.full_name === strRepoFullName)) ||
     null;
 
   const handleAddFavorite = (objRepo: RepoType) => {
     const bAlreadyFavorite = isFavorite(objRepo.full_name);
     if (bAlreadyFavorite) return;
-    setArrFavorites([...arrFavorites, objRepo]);
+    setArrFavorites([...(arrFavorites || []), objRepo]);
   };
 
   const handleRemoveFavorite = (strRepoFullName: string) => {
+    if (!arrFavorites) return;
     const arrNewFavorites = arrFavorites.filter(
       (objRepo) => objRepo.full_name !== strRepoFullName
     );
