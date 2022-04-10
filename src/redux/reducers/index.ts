@@ -22,6 +22,10 @@ export const rootReducer: Reducer<RootStateType, AnyAction> = (
     };
     if (objRootState?.repos.arrRepos)
       objNextState.repos.arrRepos = objRootState?.repos.arrRepos;
+    if (objRootState?.repos.nObjSelectedRepo) {
+      objNextState.repos.nObjSelectedRepo =
+        objRootState?.repos.nObjSelectedRepo;
+    }
     return objNextState;
   } else {
     return combinedReducer(objRootState, objAction);

@@ -9,24 +9,16 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { actionGetUserRepos } from "../src/redux/actions/repos";
-import { RootStateType, ReposStateType } from "../src/types";
+import useLazyRepos from "../src/hooks/useLazyRepos";
 import useSearchForm from "../src/hooks/useSearchForm";
 import RepoItem from "../src/modules/RepoItem";
 import NextLink from "../src/modules/NextLink";
 
 const Home: NextPage = () => {
-  const dispatch = useDispatch();
-  const { arrRepos, bLoading, nStrError } = useSelector<
-    RootStateType,
-    ReposStateType
-  >((state) => state.repos);
+  const [handleFetchRepos, { arrRepos, bLoading, nStrError }] = useLazyRepos();
 
   const { strUserName, handleSubmit, handleChange, handleReset } =
-    useSearchForm((strSearchTerm: string) =>
-      dispatch(actionGetUserRepos(strSearchTerm))
-    );
+    useSearchForm(handleFetchRepos);
 
   const renderReposList = () => {
     if (bLoading) return <Typography>Loading repos...</Typography>;
@@ -42,8 +34,8 @@ const Home: NextPage = () => {
     return arrRepos.map((repo) => (
       <NextLink
         key={repo.id}
-        href="/repository/[id]"
-        as={`/repository/${repo.id}`}
+        href="/repository/[...fullName]"
+        as={`/repository/${repo.full_name}`}
         passHref
       >
         <RepoItem objRepo={repo} />

@@ -7,6 +7,7 @@ export type ReposStateType = {
   arrRepos: RepoType[];
   bLoading: boolean;
   nStrError: null | string;
+  nObjSelectedRepo: null | RepoType;
 };
 
 export type RootStateType = {

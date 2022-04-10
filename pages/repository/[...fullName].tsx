@@ -1,28 +1,25 @@
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Container, Box, Typography } from "@mui/material";
+import { actionGetRepoDetails } from "../../src/redux/actions/repos";
 import { RootStateType, ReposStateType, RepoType } from "../../src/types";
 import { getLicenceData } from "../../src/utils";
 
 const RepositoryPage: NextPage = () => {
-  const [objRepository, setObjRepository] = useState<RepoType | null>(null);
   const router = useRouter();
   const { query } = router;
-  const { arrRepos, bLoading, nStrError } = useSelector<
-    RootStateType,
-    ReposStateType
-  >((state) => state.repos);
+  const dispatch = useDispatch();
+  const { nObjSelectedRepo } = useSelector<RootStateType, ReposStateType>(
+    (state) => state.repos
+  );
 
   useEffect(() => {
-    if (!query.id) return;
-    console.log("query.id :>> ", query.id);
-    const intSelectedId = parseInt(query.id as string, 10);
-    const objSelectedRepo =
-      arrRepos.find((objRepo) => objRepo.id === intSelectedId) || null;
-    setObjRepository(objSelectedRepo);
+    if (!query.fullName) return;
+    const strFullName = (query.fullName as string[]).join("/");
+    dispatch(actionGetRepoDetails(strFullName));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
@@ -50,7 +47,7 @@ const RepositoryPage: NextPage = () => {
           Repository page
         </Typography>
 
-        {objRepository && (
+        {nObjSelectedRepo && (
           <Box sx={{ display: "flex", flexDirection: "column", rowGap: 1 }}>
             <Typography
               variant="h2"
@@ -61,13 +58,13 @@ const RepositoryPage: NextPage = () => {
                 fontWeight: 600,
               }}
             >
-              {objRepository?.name}
+              {nObjSelectedRepo?.name}
             </Typography>
             <Typography variant="caption" sx={{ textAlign: "center" }}>
-              Description: {objRepository?.description || "not mentioned"}
+              Description: {nObjSelectedRepo?.description || "not mentioned"}
             </Typography>
             <Typography variant="caption" sx={{ textAlign: "center" }}>
-              License: {getLicenceData(objRepository?.license)}
+              License: {getLicenceData(nObjSelectedRepo?.license)}
             </Typography>
           </Box>
         )}
