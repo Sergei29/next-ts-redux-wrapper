@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, IconButton } from "@mui/material";
 import { actionGetRepoDetails } from "../../src/redux/actions/repos";
-import { RootStateType, ReposStateType, RepoType } from "../../src/types";
+import { RootStateType, ReposStateType } from "../../src/types";
 import { getLicenceData } from "../../src/utils";
+import useFavorites from "../../src/hooks/useFavorites";
+import FavoriteButton from "../../src/modules/common/FavoriteButton";
 
 const RepositoryPage: NextPage = () => {
   const router = useRouter();
@@ -15,6 +17,7 @@ const RepositoryPage: NextPage = () => {
   const { nObjSelectedRepo } = useSelector<RootStateType, ReposStateType>(
     (state) => state.repos
   );
+  const { handleAddFavorite, isFavorite } = useFavorites();
 
   useEffect(() => {
     if (!query.fullName) return;
@@ -59,6 +62,10 @@ const RepositoryPage: NextPage = () => {
               }}
             >
               {nObjSelectedRepo?.name}
+              <FavoriteButton
+                bIsFavorite={isFavorite(nObjSelectedRepo?.full_name)}
+                handleClick={() => handleAddFavorite(nObjSelectedRepo)}
+              />
             </Typography>
             <Typography variant="caption" sx={{ textAlign: "center" }}>
               Description: {nObjSelectedRepo?.description || "not mentioned"}

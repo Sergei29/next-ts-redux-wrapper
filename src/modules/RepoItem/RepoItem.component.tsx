@@ -1,12 +1,22 @@
 import React, { memo } from "react";
-import { Box, Card, CardContent, Typography, Chip } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Chip,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { RepoType } from "../../types";
 
 type Props = {
   objRepo: RepoType;
+  handleRemoveFavorite?: (strFullName: string) => void;
 };
 
-const RepoItem = ({ objRepo }: Props) => {
+const RepoItem = ({ objRepo, handleRemoveFavorite }: Props) => {
   return (
     <Card sx={{ width: "300px" }}>
       <CardContent
@@ -31,6 +41,13 @@ const RepoItem = ({ objRepo }: Props) => {
         <Typography variant="caption">
           Language: <Chip label={objRepo.language || "not mentioned"} />
         </Typography>
+        {handleRemoveFavorite && (
+          <Tooltip title="remove">
+            <IconButton onClick={() => handleRemoveFavorite(objRepo.full_name)}>
+              <DeleteForeverIcon />
+            </IconButton>
+          </Tooltip>
+        )}
       </CardContent>
     </Card>
   );
