@@ -1,1 +1,1 @@
-export { default } from "./useLazyRepos";
+export * from "./useLazyRepos.hook";

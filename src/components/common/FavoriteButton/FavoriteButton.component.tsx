@@ -8,12 +8,13 @@ type Props = {
   handleClick: () => void;
 };
 
-const FavoriteButton = ({ bIsFavorite, handleClick }: Props): JSX.Element => (
+export const FavoriteButton = ({
+  bIsFavorite,
+  handleClick,
+}: Props): JSX.Element => (
   <IconButton onClick={handleClick} disabled={bIsFavorite}>
     <Tooltip title={bIsFavorite ? "this repo is favorite" : "add to favorites"}>
       {bIsFavorite ? <StarIcon /> : <StarBorderIcon />}
     </Tooltip>
   </IconButton>
 );
-
-export default FavoriteButton;

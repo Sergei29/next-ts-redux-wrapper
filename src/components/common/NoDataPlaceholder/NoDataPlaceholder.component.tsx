@@ -5,7 +5,7 @@ type Props = {
   strCustomMessage?: string;
 };
 
-const NoDataPlaceholder = ({ strCustomMessage }: Props) => (
+export const NoDataPlaceholder = ({ strCustomMessage }: Props) => (
   <Box
     sx={{
       minHeight: "30vh",
@@ -26,5 +26,3 @@ const NoDataPlaceholder = ({ strCustomMessage }: Props) => (
     />
   </Box>
 );
-
-export default NoDataPlaceholder;

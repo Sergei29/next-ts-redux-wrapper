@@ -1,14 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Container, Box, Typography } from "@mui/material";
-import useFavorites from "../../src/hooks/useFavorites";
-import FavoritesList from "../../src/modules/FavoritesList";
+import { useFavorites } from "../../src/hooks/useFavorites";
+import { FavoritesList } from "../../src/components/FavoritesList";
+import { PageContainer } from "../../src/components/common/PageContainer";
 
 const BookmarksPage: NextPage = () => {
   const { arrFavorites, handleRemoveFavorite } = useFavorites();
   return (
-    <Container sx={{ backgroundColor: (theme) => theme.bg.main }}>
+    <Fragment>
       <Head>
         <title>Github Bookmarks List</title>
         <meta
@@ -18,22 +18,14 @@ const BookmarksPage: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Box component="main">
-        <Typography
-          variant="h1"
-          textAlign="center"
-          sx={{ color: (theme) => theme.text.main, fontSize: "32px", my: 3 }}
-        >
-          Bookmarked repositories
-        </Typography>
+      <PageContainer>
+        <PageContainer.Title>Bookmarked repositories</PageContainer.Title>
         <FavoritesList
           arrFavorites={arrFavorites || []}
           handleRemoveFavorite={handleRemoveFavorite}
         />
-      </Box>
-
-      <Box component="footer"></Box>
-    </Container>
+      </PageContainer>
+    </Fragment>
   );
 };
 

@@ -15,7 +15,7 @@ const getValueFromLocalStorage = <P>(key: string, initialValue: P): P => {
   }
 };
 
-const useLocalStorage = <T>(
+export const useLocalStorage = <T>(
   key: string,
   initialValue: T
 ): HookReturnValue<T> => {
@@ -42,5 +42,3 @@ const useLocalStorage = <T>(
 
   return [storedValue, setValue];
 };
-
-export default useLocalStorage;

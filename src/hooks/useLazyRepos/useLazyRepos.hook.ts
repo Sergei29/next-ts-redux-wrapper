@@ -1,9 +1,10 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionGetUserRepos } from "../../redux/actions/repos";
 import { RootStateType, ReposStateType } from "../../types";
 
-const useLazyRepos = (): [(strSearchTerm: string) => void, ReposStateType] => {
+type HookReturnType = [(strSearchTerm: string) => void, ReposStateType];
+
+export const useLazyRepos = (): HookReturnType => {
   const dispatch = useDispatch();
   const { arrRepos, bLoading, nStrError, nObjSelectedRepo } = useSelector<
     RootStateType,
@@ -19,5 +20,3 @@ const useLazyRepos = (): [(strSearchTerm: string) => void, ReposStateType] => {
     { arrRepos, bLoading, nStrError, nObjSelectedRepo },
   ];
 };
-
-export default useLazyRepos;

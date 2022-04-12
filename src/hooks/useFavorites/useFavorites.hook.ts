@@ -1,7 +1,7 @@
-import useLocalStorage from "../useLocalStorage";
+import { useLocalStorage } from "../useLocalStorage";
 import { RepoType } from "../../types";
 
-const useFavorites = () => {
+export const useFavorites = () => {
   const [arrFavorites, setArrFavorites] = useLocalStorage<RepoType[]>(
     "arrFavoriteRepos",
     []
@@ -39,5 +39,3 @@ const useFavorites = () => {
     isFavorite,
   };
 };
-
-export default useFavorites;

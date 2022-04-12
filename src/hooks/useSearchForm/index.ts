@@ -1,1 +1,1 @@
-export { default } from "./useSearchForm.hook";
+export * from "./useSearchForm.hook";

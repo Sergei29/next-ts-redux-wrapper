@@ -1,15 +1,18 @@
 import React from "react";
 import { Box } from "@mui/material";
 import { RepoType } from "../../types";
-import RepoItem from "../RepoItem";
-import NoDataPlaceholder from "../common/NoDataPlaceholder";
+import { RepoItem } from "../RepoItem";
+import { NoDataPlaceholder } from "../common/NoDataPlaceholder";
 
 type Props = {
   arrFavorites: RepoType[];
   handleRemoveFavorite: (strFullname: string) => void;
 };
 
-const FavoritesList = ({ arrFavorites, handleRemoveFavorite }: Props) => (
+export const FavoritesList = ({
+  arrFavorites,
+  handleRemoveFavorite,
+}: Props) => (
   <Box
     sx={{
       display: "flex",
@@ -31,5 +34,3 @@ const FavoritesList = ({ arrFavorites, handleRemoveFavorite }: Props) => (
     )}
   </Box>
 );
-
-export default FavoritesList;

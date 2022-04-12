@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { RepoType } from "../../types";
+import { OBJ_DATA_TEST_IDS } from "../../constants";
 
 type Props = {
   objRepo: RepoType;
@@ -18,7 +19,7 @@ type Props = {
 
 const RepoItem = ({ objRepo, handleRemoveFavorite }: Props) => {
   return (
-    <Card sx={{ width: "300px" }}>
+    <Card sx={{ width: "300px" }} data-testid={OBJ_DATA_TEST_IDS.repoListItem}>
       <CardContent
         sx={{
           ":hover": {

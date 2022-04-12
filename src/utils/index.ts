@@ -1,2 +1,2 @@
-export * from "./reposPayloadAdaptor";
+export * from "./reposPayloadAdapter";
 export * from "./getLicenceData";

@@ -6,12 +6,13 @@ type Props = {
   children: React.ReactNode;
 } & LinkProps;
 
-const NextLink = ({ children, ...restLinkProps }: Props): JSX.Element => (
+export const NextLink = ({
+  children,
+  ...restLinkProps
+}: Props): JSX.Element => (
   <Link passHref {...restLinkProps}>
     <Box component="a" sx={{ textDecoration: "none" }}>
       {children}
     </Box>
   </Link>
 );
-
-export default NextLink;

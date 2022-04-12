@@ -2,8 +2,8 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "@mui/material/styles";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import { wrapper } from "../src/redux/store";
-import { createEmotionCache, theme } from "../src/Theme";
-import CssReset from "../src/modules/common/CssReset";
+import { createEmotionCache, theme } from "../src/theme";
+import { CssReset } from "../src/components/common/CssReset";
 
 /**
  * @description  Client-side cache, shared for the whole session of the user in the browser.
